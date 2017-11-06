@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter_Should.cs" />
+    <Compile Include="ImageVisualization.cs" />
     <Compile Include="MyForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TagCloudVisualization;
 
 namespace TagCloudVisualization
 {
@@ -26,6 +28,7 @@ namespace TagCloudVisualization
 					var color = RandomColor();
 					args.Graphics.FillRectangle(new SolidBrush(color), rect);
 				}
+				ImageVisualization.GetCloudImage(cloud).Save("D:\\image2.png", ImageFormat.Png);
 			};
 		}
 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace TagCloudVisualization
 {
@@ -19,7 +21,7 @@ namespace TagCloudVisualization
 		[SetUp]
 		public void SetUp()
 		{
-			center = new Point(5, 5);
+			center = new Point(500, 500);
 			cloud = new CircularCloudLayouter(center);
 		}
 
@@ -85,16 +87,28 @@ namespace TagCloudVisualization
 		}
 
 		//TODO: нормальные названия тестов
-		[Test, Timeout(100)]
+		[Test, Timeout(10)]
 		public void Optimization()
 		{
 			var size = new Size(50, 50);
 
 			for (var i = 0; i < 100; i++)
 				cloud.PutNextRectangle(size);
-
-
 		}
+
+		[TearDown]
+		public void TearDown()
+		{
+			var testresult = TestContext.CurrentContext.Result.Outcome;
+
+			if (!testresult.Equals(ResultState.Success))
+			{
+				var path = Environment.CurrentDirectory + "\\" + TestContext.CurrentContext.Test.FullName + ".png";
+				Console.WriteLine("Tag cloud visualization saved to file " + path);
+				ImageVisualization.GetCloudImage(cloud).Save(path, ImageFormat.Png);
+			}
+		}
+
 
 	}
 

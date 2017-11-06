@@ -10,23 +10,28 @@ namespace TagCloudVisualization
     public class CircularCloudLayouter
     {
 
-	    private Point center;
+	    public Point Center { get; }
+
 	    private Spiral spiral;
 
 		private List<Rectangle?> cloudItems = new List<Rectangle?>();
+
+	    public IEnumerable<Rectangle> CloudItems => 
+			cloudItems.Where(rect => rect.HasValue).Select(rectangle => rectangle.Value);
+
 
 	    private double sumOfWidth = 0;
 	    private double sumOfHeight = 0;
 
 		public CircularCloudLayouter(Point center)
 		{
-			this.center = center;
+			this.Center = center;
 			spiral = new Spiral(center);
 		}
 
 	    public Rectangle PutNextRectangle(Size rectangleSize)
 	    {
-		    var currenSpiral = IsShouldRunNewSpiral(rectangleSize) ? new Spiral(center) : spiral;
+		    var currenSpiral = IsShouldRunNewSpiral(rectangleSize) ? new Spiral(Center) : spiral;
 		    Rectangle? intersectRect = null;
 			while (true)
 			{
