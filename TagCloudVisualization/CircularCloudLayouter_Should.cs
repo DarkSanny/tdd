@@ -71,6 +71,31 @@ namespace TagCloudVisualization
 
 		public static Point GetRectCenter(Rectangle rect) => new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
 
+		[Test]
+		public void Density()
+		{
+			var size = new Size(10, 10);
+
+			for (var i = 0; i < 50; i++)
+				cloud.PutNextRectangle(size);
+			var lastRect = cloud.PutNextRectangle(size);
+
+			DistanceToCenter(lastRect, center).Should()
+				.BeGreaterThan(DistanceToCenter(cloud.PutNextRectangle(new Size(1, 1)), center));
+		}
+
+		//TODO: нормальные названия тестов
+		[Test, Timeout(100)]
+		public void Optimization()
+		{
+			var size = new Size(50, 50);
+
+			for (var i = 0; i < 100; i++)
+				cloud.PutNextRectangle(size);
+
+
+		}
+
 	}
 
 }
