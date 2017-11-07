@@ -31,11 +31,11 @@ namespace TagCloudVisualization
 
 	    public Rectangle PutNextRectangle(Size rectangleSize)
 	    {
-		    var currenSpiral = IsShouldRunNewSpiral(rectangleSize) ? new Spiral(Center) : spiral;
+		    var currentSpiral = IsShouldRunNewSpiral(rectangleSize) ? new Spiral(Center) : spiral;
 		    Rectangle? intersectRect = null;
 			while (true)
 			{
-				var point = currenSpiral.GetNextPoint();
+				var point = currentSpiral.GetNextPoint();
 				var rectangle = new Rectangle(point.X-rectangleSize.Width/2, point.Y - rectangleSize.Height/2, 
 					rectangleSize.Width, rectangleSize.Height);
 				if (intersectRect != null && rectangle.IntersectsWith(intersectRect.Value)) continue;
