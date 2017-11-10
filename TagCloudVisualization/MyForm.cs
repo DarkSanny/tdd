@@ -21,7 +21,7 @@ namespace TagCloudVisualization
 			var cloud = new CircularCloudLayouter(new Point(500, 500));
 			Paint += (sender, args) =>
 			{
-				for (int i = 0; i < 100; i++)
+				for (var i = 0; i < 100; i++)
 				{
 					var size = new Size(20 + random.Next(80), 20 + random.Next(80));
 					var rect = cloud.PutNextRectangle(size);

@@ -36,6 +36,24 @@ namespace TagCloudVisualization
 		}
 
 		[Test]
+		public void Cloud_ShouldThrowWhenDefaultSize()
+		{
+			Action act = () => cloud.PutNextRectangle(default(Size));
+
+			act.ShouldThrow<ArgumentException>();
+		}
+
+		[Test]
+		public void Cloud_ShouldThrowWhenNegativeSize()
+		{
+			Size size = new Size(-5, -1);
+			Action act = () => cloud.PutNextRectangle(size);
+
+			act.ShouldThrow<ArgumentException>();
+
+		}
+
+		[Test]
 		public void FirstRectShouldIntersectCenter()
 		{
 			var firstRect = cloud.PutNextRectangle(new Size(5, 4));

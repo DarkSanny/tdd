@@ -12,12 +12,10 @@ namespace TagCloudVisualization
 
 	    public Point Center { get; }
 
-	    private Spiral spiral;
+	    private PolarSpiral spiral;
+		private List<Rectangle> cloudItems = new List<Rectangle>();
 
-		private List<Rectangle?> cloudItems = new List<Rectangle?>();
-
-	    public IEnumerable<Rectangle> CloudItems => 
-			cloudItems.Where(rect => rect.HasValue).Select(rectangle => rectangle.Value);
+	    public IEnumerable<Rectangle> CloudItems => cloudItems;
 
 
 	    private double sumOfWidth = 0;
@@ -26,28 +24,47 @@ namespace TagCloudVisualization
 		public CircularCloudLayouter(Point center)
 		{
 			this.Center = center;
-			spiral = new Spiral(center);
+			spiral = new PolarSpiral(center);
 		}
 
 	    public Rectangle PutNextRectangle(Size rectangleSize)
 	    {
-		    var currentSpiral = IsShouldRunNewSpiral(rectangleSize) ? new Spiral(Center) : spiral;
-		    Rectangle? intersectRect = null;
+			if (IsShouldThrowArgumentException(rectangleSize)) throw new ArgumentException();
+		    var currentSpiral = IsShouldRunNewSpiral(rectangleSize) ? new PolarSpiral(Center) : spiral;
+		    var intersectRect = default(Rectangle);
 			while (true)
 			{
 				var point = currentSpiral.GetNextPoint();
-				var rectangle = new Rectangle(point.X-rectangleSize.Width/2, point.Y - rectangleSize.Height/2, 
-					rectangleSize.Width, rectangleSize.Height);
-				if (intersectRect != null && rectangle.IntersectsWith(intersectRect.Value)) continue;
-				intersectRect = cloudItems
-					.Where(rect => rect != null)
-					.FirstOrDefault(rect => rect.Value.IntersectsWith(rectangle));
-				if (intersectRect != null) continue;
-				return CreateRectangle(rectangle);
+				var rectangle = CreateRectangle(point, rectangleSize);
+				if (intersectRect != default(Rectangle) && rectangle.IntersectsWith(intersectRect)) continue;
+				intersectRect = GetIntersect(rectangle);
+				if (intersectRect != default(Rectangle)) continue;
+				rectangle = TryMoveToCenter(rectangle, currentSpiral);
+				return AddRectangleInCloud(rectangle);
 			}
 	    }
 
-	    private Rectangle CreateRectangle(Rectangle rectangle)
+	    private Rectangle TryMoveToCenter(Rectangle rectangle, PolarSpiral spiral)
+	    {
+		    var correctRectangle = rectangle;
+			var line = new PolarDecreasingLine(spiral.Center, spiral.Length, spiral.Angle);
+		    while (true)
+		    {
+			    var point = line.GetNextPoint();
+				var rect = CreateRectangle(point, rectangle.Size);
+			    var intersectRect = GetIntersect(rect);
+			    if (intersectRect == default(Rectangle) && line.Length != 0) correctRectangle = rect;
+			    else return correctRectangle;
+		    }
+	    }
+
+	    private Rectangle GetIntersect(Rectangle rectangle) => cloudItems
+		    .FirstOrDefault(rect => rect.IntersectsWith(rectangle));
+
+		private Rectangle CreateRectangle(Point point, Size size) => 
+			new Rectangle(point.X - size.Width/2, point.Y-size.Height/2, size.Width, size.Height);
+
+	    private Rectangle AddRectangleInCloud(Rectangle rectangle)
 	    {
 		    sumOfWidth += rectangle.Width;
 		    sumOfHeight += rectangle.Height;
@@ -59,7 +76,11 @@ namespace TagCloudVisualization
 	    {
 		    return rectangleSize.Width < (sumOfWidth / cloudItems.Count) / 2 &&
 		           rectangleSize.Height < (sumOfHeight/ cloudItems.Count) / 2;
+	    }
 
+	    private bool IsShouldThrowArgumentException(Size rectangleSize)
+	    {
+		    return rectangleSize == default(Size) || rectangleSize.Width < 0 || rectangleSize.Height < 0;
 	    }
 
 	}
