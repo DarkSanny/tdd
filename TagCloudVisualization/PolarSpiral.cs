@@ -9,10 +9,10 @@ using FluentAssertions;
 
 namespace TagCloudVisualization
 {
-	public class Spiral : PolarFunction
+	public class PolarSpiral : PolarFunction
 	{
 
-		public Spiral(Point center) : base(center) {}
+		public PolarSpiral(Point center) : base(center) {}
 
 		public override Point GetNextPoint()
 		{

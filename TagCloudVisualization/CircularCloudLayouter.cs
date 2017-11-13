@@ -80,7 +80,7 @@ namespace TagCloudVisualization
 
 	    private bool IsShouldThrowArgumentException(Size rectangleSize)
 	    {
-		    return rectangleSize == default(Size) || rectangleSize.Width < 0 || rectangleSize.Height < 0;
+		    return rectangleSize.Width <= 0 || rectangleSize.Height <= 0;
 	    }
 
 	}

@@ -58,14 +58,14 @@
     <Compile Include="CircularCloudLayouter.cs" />
     <Compile Include="CircularCloudLayouter_Should.cs" />
     <Compile Include="ImageVisualization.cs" />
-    <Compile Include="Line.cs" />
+    <Compile Include="PolarDecreasingLine.cs" />
     <Compile Include="MyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PolarFunction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Spiral.cs" />
+    <Compile Include="PolarSpiral.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

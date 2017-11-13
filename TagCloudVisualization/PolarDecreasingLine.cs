@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace TagCloudVisualization
 {
-	public class Line : PolarFunction
+	public class PolarDecreasingLine : PolarFunction
 	{
-		public Line(Point center, double length, double angle) : base(center)
+		public PolarDecreasingLine(Point center, double length, double angle) : base(center)
 		{
 			Length = length;
 			Angle = angle;

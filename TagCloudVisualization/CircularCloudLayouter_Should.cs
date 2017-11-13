@@ -102,14 +102,6 @@ namespace TagCloudVisualization
 				.BeGreaterThan(DistanceToCenter(smallRect, center));
 		}
 
-		[Test, Timeout(100)]
-		public void TestOfOptimization()
-		{
-			var size = new Size(50, 50);
-			for (var i = 0; i < 100; i++)
-				cloud.PutNextRectangle(size);
-		}
-
 		[TearDown]
 		public void TearDown()
 		{
