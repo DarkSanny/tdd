@@ -9,12 +9,11 @@ namespace TagCloudVisualization
 {
 	public class ImageVisualization
 	{
-
 		public static Random random = new Random();
 
 		public static Bitmap GetCloudImage(CircularCloudLayouter cloud)
 		{
-			var bitmap = new Bitmap(cloud.Center.X*2, cloud.Center.Y*2);
+			var bitmap = new Bitmap(cloud.Center.X * 2, cloud.Center.Y * 2);
 			var graphics = Graphics.FromImage(bitmap);
 			foreach (var item in cloud.CloudItems)
 			{
@@ -27,6 +26,5 @@ namespace TagCloudVisualization
 		{
 			return Color.FromArgb(random.Next(156), random.Next(156), random.Next(156));
 		}
-
 	}
 }

@@ -11,8 +11,7 @@ namespace TagCloudVisualization
 {
 	public class PolarSpiral : PolarFunction
 	{
-
-		public PolarSpiral(Point center) : base(center) {}
+		public PolarSpiral(Point center) : base(center){}
 
 		public override Point GetNextPoint()
 		{
@@ -21,5 +20,4 @@ namespace TagCloudVisualization
 			return GetCartesianPoint(Length, Angle);
 		}
 	}
-
 }

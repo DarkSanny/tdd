@@ -14,7 +14,6 @@ namespace TagCloudVisualization
 	[TestFixture]
 	public class CircularCloudLayouter_Should
 	{
-
 		private Point center;
 		private CircularCloudLayouter cloud;
 
@@ -50,7 +49,6 @@ namespace TagCloudVisualization
 			Action act = () => cloud.PutNextRectangle(size);
 
 			act.ShouldThrow<ArgumentException>();
-
 		}
 
 		[Test]
@@ -114,8 +112,5 @@ namespace TagCloudVisualization
 				ImageVisualization.GetCloudImage(cloud).Save(path, ImageFormat.Png);
 			}
 		}
-
-
 	}
-
 }
